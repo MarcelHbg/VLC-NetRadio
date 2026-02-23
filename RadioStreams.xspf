@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" xmlns:vlc="http://www.videolan.org/vlc/playlist/ns/0/" version="1">
+	<title>Wiedergabeliste</title>
+	<trackList>
+		<track>
+			<location>http://streams.radiobob.de/bob-national/mp3-192/mediaplayer</location>
+			<title>RADIO BOB - Livestream National</title>
+			<extension application="http://www.videolan.org/vlc/playlist/0">
+				<vlc:id>0</vlc:id>
+			</extension>
+		</track>
+		<track>
+			<location>http://streams.radiobob.de/bob-acdc/mp3-192/mediaplayer</location>
+			<title>RADIO BOB! - AC/DC Streams</title>
+			<extension application="http://www.videolan.org/vlc/playlist/0">
+				<vlc:id>1</vlc:id>
+				<vlc:option>network-caching=1000</vlc:option>
+			</extension>
+		</track>
+		<track>
+			<location>http://mdr-284320-0.cast.mdr.de/mdr/284320/0/mp3/high/stream.mp3</location>
+			<title>MDR JUMP</title>
+			<extension application="http://www.videolan.org/vlc/playlist/0">
+				<vlc:id>2</vlc:id>
+				<vlc:option>network-caching=1000</vlc:option>
+			</extension>
+		</track>
+		<track>
+			<location>https://topradio-de-hz-fal-stream08-cluster01.radiohost.de/kissfm_mp3-192?ref=internetradio&amp;amsparams=internetradio</location>
+			<title>KISS FM</title>
+			<extension application="http://www.videolan.org/vlc/playlist/0">
+				<vlc:id>3</vlc:id>
+				<vlc:option>network-caching=1000</vlc:option>
+			</extension>
+		</track>
+		<track>
+			<location>https://stream.berliner-rundfunk.de/brf/mp3-128/playlist</location>
+			<title>91.4 BRF</title>
+			<extension application="http://www.videolan.org/vlc/playlist/0">
+				<vlc:id>4</vlc:id>
+			</extension>
+		</track>
+		<track>
+			<location>https://stream.rs2.de/rs2/mp3-128/playlist</location>
+			<title>94.3 RS2</title>
+			<extension application="http://www.videolan.org/vlc/playlist/0">
+				<vlc:id>5</vlc:id>
+			</extension>
+		</track>
+		<track>
+			<location>http://stream.ffn.de/radiobollerwagen/mp3-192/?</location>
+			<title>Radio Bollerwagen</title>
+			<extension application="http://www.videolan.org/vlc/playlist/0">
+				<vlc:id>6</vlc:id>
+				<vlc:option>network-caching=1000</vlc:option>
+			</extension>
+		</track>
+		<track>
+			<location>http://stream.sunshine-live.de/live/mp3-192</location>
+			<title>SUNSHINE LIVE - Simulcast</title>
+			<extension application="http://www.videolan.org/vlc/playlist/0">
+				<vlc:id>7</vlc:id>
+				<vlc:option>network-caching=1000</vlc:option>
+			</extension>
+		</track>
+	</trackList>
+	<extension application="http://www.videolan.org/vlc/playlist/0">
+		<vlc:item tid="0"/>
+		<vlc:item tid="1"/>
+		<vlc:item tid="2"/>
+		<vlc:item tid="3"/>
+		<vlc:item tid="4"/>
+		<vlc:item tid="5"/>
+		<vlc:item tid="6"/>
+		<vlc:item tid="7"/>
+	</extension>
+</playlist>

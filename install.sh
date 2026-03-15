@@ -4,9 +4,16 @@
 # This script installs the VLC Radio player as a user systemd service
 #
 # Usage:
-#   ./install.sh          # Installs for current user
+#   ./install.sh          # Installs for current user (headless with cvlc)
+#   ./install.sh --gui    # Installs with GUI enabled (uses vlc instead of cvlc)
 
 set -e
+
+# Parse command line arguments
+GUI_MODE=false
+if [ "$1" == "--gui" ]; then
+    GUI_MODE=true
+fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 INSTALL_DIR="${HOME}/.local/share/vlc-radio"
@@ -49,6 +56,12 @@ fi
 cp "$SCRIPT_DIR/$SERVICE_FILE" "$SERVICE_PATH"
 echo "✓ Installed service file to: $SERVICE_PATH"
 
+# Modify service for GUI mode if requested
+if [ "$GUI_MODE" = true ]; then
+    sed -i 's|/usr/bin/cvlc|/usr/bin/vlc|g' "$SERVICE_PATH"
+    echo "✓ Modified service to use VLC with GUI"
+fi
+
 # Copy playlist file
 if [ ! -f "$INSTALL_DIR/RadioStreams.xspf" ]; then
     msg="✓ Copied RadioStreams.xspf to $INSTALL_DIR"
@@ -85,3 +98,5 @@ echo "  Status:  systemctl --user status vlc-radio"
 echo "  Logs:    journalctl --user-unit=vlc-radio.service -f"
 echo "  Recent:  journalctl --user-unit=vlc-radio.service -n 100 --no-pager"
 echo "  Disable: systemctl --user disable vlc-radio"
+echo ""
+echo "Note: Use './install.sh --gui' to reinstall with GUI enabled."

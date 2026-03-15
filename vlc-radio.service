@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=%h/.local/share/vlc-radio
-ExecStart=/usr/bin/cvlc -vv %h/.local/share/vlc-radio/RadioStreams.xspf
+ExecStart=/usr/bin/cvlc %h/.local/share/vlc-radio/RadioStreams.xspf
 Restart=on-failure
 StartLimitBurst=6
 RestartSec=10

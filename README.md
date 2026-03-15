@@ -23,13 +23,21 @@ Install for your user (no sudo required):
 ./install.sh
 ```
 
+Or install with GUI enabled:
+
+```bash
+./install.sh --gui
+```
+
 This creates a user-level systemd service that automatically starts when you log in.
 
 The script will:
 1. Create your user service directory under `~/.config/systemd/user/`
-2. Install `RadioStreams.xspf` to `/usr/share/vlc-radio/`
+2. Install `RadioStreams.xspf` to `~/.local/share/vlc-radio/`
 3. Install and enable the user systemd service
 4. Optionally start the service immediately
+
+**Note**: The `--gui` option modifies the service to use `vlc` (with GUI) instead of `cvlc` (headless). GUI mode may not display properly in background services without a display server.
 
 ## Service Management
 
@@ -50,10 +58,10 @@ sudo usermod -aG systemd-journal $USER
 
 ## Adding or Editing Streams
 
-Edit `/usr/share/vlc-radio/RadioStreams.xspf`:
+Edit `~/.local/share/vlc-radio/RadioStreams.xspf`:
 
 ```bash
-sudo nano /usr/share/vlc-radio/RadioStreams.xspf
+nano ~/.local/share/vlc-radio/RadioStreams.xspf
 ```
 
 Then restart the service:

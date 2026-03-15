@@ -20,7 +20,7 @@ Plays internet radio streams via VLC on user login using a systemd user service.
 Install for your user (no sudo required):
 
 ```bash
-chmod +x install.sh && ./install.sh
+./install.sh
 ```
 
 This creates a user-level systemd service that automatically starts when you log in.

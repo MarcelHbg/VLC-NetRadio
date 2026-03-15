@@ -9,7 +9,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-INSTALL_DIR="/usr/share/vlc-radio"
+INSTALL_DIR="${HOME}/.local/share/vlc-radio"
 SERVICE_FILE="vlc-radio.service"
 SERVICE_DIR="${HOME}/.config/systemd/user"
 SERVICE_PATH="$SERVICE_DIR/$SERVICE_FILE"
@@ -27,39 +27,36 @@ if ! command -v vlc &>/dev/null; then
 fi
 echo "✓ VLC found: $(command -v vlc)"
 
-# Create user systemd directory
-mkdir -p "$SERVICE_DIR"
-echo "✓ Created user systemd directory: $SERVICE_DIR"
+# Create user systemd directory if it doesn't exist
+if [ ! -d "$SERVICE_DIR" ]; then
+    mkdir -p "$SERVICE_DIR"
+    echo "✓ Created user systemd directory: $SERVICE_DIR"
+fi
 
-# Copy files (may need sudo for /usr/share)
+# Create installation directory if it doesn't exist
+if [ ! -d "$INSTALL_DIR" ]; then
+    mkdir -p "$INSTALL_DIR"
+    echo "✓ Created installation directory: $INSTALL_DIR"
+fi
+
+# Copy files
 if [ ! -f "$SCRIPT_DIR/RadioStreams.xspf" ]; then
     echo "Error: RadioStreams.xspf not found in $SCRIPT_DIR"
     exit 1
-fi
-
-if [ ! -d "$INSTALL_DIR" ]; then
-    echo "Note: Installation directory needs sudo to create: $INSTALL_DIR"
-    sudo mkdir -p "$INSTALL_DIR"
 fi
 
 # Copy service file to user directory
 cp "$SCRIPT_DIR/$SERVICE_FILE" "$SERVICE_PATH"
 echo "✓ Installed service file to: $SERVICE_PATH"
 
-# Copy playlist file (may need sudo)
-if [ -w "$INSTALL_DIR" ]; then
-    cp "$SCRIPT_DIR/RadioStreams.xspf" "$INSTALL_DIR/RadioStreams.xspf"
-    chmod 644 "$INSTALL_DIR/RadioStreams.xspf"
-    echo "✓ Copied RadioStreams.xspf to $INSTALL_DIR"
+# Copy playlist file
+if [ ! -f "$INSTALL_DIR/RadioStreams.xspf" ]; then
+    msg="✓ Copied RadioStreams.xspf to $INSTALL_DIR"
 else
-    echo "Note: Cannot write to $INSTALL_DIR without sudo"
-    sudo cp "$SCRIPT_DIR/RadioStreams.xspf" "$INSTALL_DIR/RadioStreams.xspf"
-    sudo chmod 644 "$INSTALL_DIR/RadioStreams.xspf"
-    sudo chown "$TARGET_USER:$TARGET_GROUP" "$INSTALL_DIR/RadioStreams.xspf"
-    sudo chown "$TARGET_USER:$TARGET_GROUP" "$INSTALL_DIR"
-    echo "✓ Copied RadioStreams.xspf to $INSTALL_DIR"
-    echo "✓ Fixed ownership to $TARGET_USER:$TARGET_GROUP"
+    msg="✓ Overwrote RadioStreams.xspf in $INSTALL_DIR"
 fi
+cp "$SCRIPT_DIR/RadioStreams.xspf" "$INSTALL_DIR/RadioStreams.xspf"
+echo $msg
 
 # Reload user systemd daemon
 systemctl --user daemon-reload

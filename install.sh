@@ -59,7 +59,8 @@ echo "✓ Installed service file to: $SERVICE_PATH"
 # Modify service for GUI mode if requested
 if [ "$GUI_MODE" = true ]; then
     sed -i 's|/usr/bin/cvlc|/usr/bin/vlc|g' "$SERVICE_PATH"
-    echo "✓ Modified service to use VLC with GUI"
+    sed -i '/After=network.target/a ConditionEnvironment=DISPLAY' "$SERVICE_PATH"
+    echo "✓ Modified service to use VLC with GUI and check for display session"
 fi
 
 # Copy playlist file
